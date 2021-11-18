@@ -11,6 +11,7 @@ import com.example.apiweblaptop.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +47,30 @@ public class CompanyServiceImpl implements CompanyService {
         return true;
     }
 
+    @Override
+    public List<CompanyDTO> getNpp() {
+        List<Company> companies = companyRepository.findAll();
+        List<Company> companiesNew = new ArrayList<>();
+        companies.forEach(e -> {
+            if(e.getCompany_type().equals("Nhà phân phối")) {
+                System.out.println(e.getCompany_type());
+                companiesNew.add(e);
+            }
+        });
+        return new CompanyDTO().entityToDTO(companiesNew);
+    }
+
+    @Override
+    public List<CompanyDTO> getDVVC() {
+        List<Company> companies = companyRepository.findAll();
+        List<Company> companiesNew = new ArrayList<>();
+        companies.forEach(e -> {
+            if(e.getCompany_type().equals("Vận chuyển")) {
+                companiesNew.add(e);
+            }
+        });
+        return new CompanyDTO().entityToDTO(companiesNew);
+    }
     @Override
     public CompanyDTO updateCompany(Long companyId, CompanyDTO companyDTO) throws ResourceNotFoundException {
         Company companyExist = companyRepository.findById(companyId).orElseThrow(() ->

@@ -53,7 +53,28 @@ public class CompanyController {
         }
         return ResponseEntity.ok(responseDTO);
     }
+    // get npp
+    @GetMapping("/npp")
+    public ResponseEntity<ResponseDTO> getNhaPhanPhoi()  {
+        ResponseDTO responseDTO = new ResponseDTO();
+            List<CompanyDTO> companyDTO = companyService.getNpp();
 
+            responseDTO.setData(companyDTO);
+            responseDTO.setSuccessCode(SuccessCode.FIND_CATEGORY_SUCCESS);
+
+        return ResponseEntity.ok(responseDTO);
+    }
+    // get dvvc
+    @GetMapping("/dvvc")
+    public ResponseEntity<ResponseDTO> getDVVanChuyen()  {
+        ResponseDTO responseDTO = new ResponseDTO();
+        List<CompanyDTO> companyDTO = companyService.getDVVC();
+
+        responseDTO.setData(companyDTO);
+        responseDTO.setSuccessCode(SuccessCode.FIND_CATEGORY_SUCCESS);
+
+        return ResponseEntity.ok(responseDTO);
+    }
     @PostMapping("/add")
     public ResponseEntity<ResponseDTO> createCate( @RequestBody CompanyDTO companyDTO) throws AddDataFail {
         ResponseDTO responseDTO = new ResponseDTO();

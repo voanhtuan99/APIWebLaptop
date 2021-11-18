@@ -10,6 +10,10 @@ import java.util.Optional;
 public interface CompanyService {
     public List<CompanyDTO> retrieveCompany();
 
+    public List<CompanyDTO> getNpp();
+
+    public List<CompanyDTO> getDVVC();
+
     public Optional<CompanyDTO> getCompany(Long id) throws ResourceNotFoundException;
 
     public CompanyDTO saveCompany(CompanyDTO companyDTO) throws ResourceNotFoundException;

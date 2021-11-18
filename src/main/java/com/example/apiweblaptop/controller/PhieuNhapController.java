@@ -1,10 +1,7 @@
 package com.example.apiweblaptop.controller;
 
 import com.example.apiweblaptop.dto.*;
-import com.example.apiweblaptop.exception.AddDataFail;
-import com.example.apiweblaptop.exception.DeleteDataFail;
-import com.example.apiweblaptop.exception.GetDataFail;
-import com.example.apiweblaptop.exception.UpdateDataFail;
+import com.example.apiweblaptop.exception.*;
 import com.example.apiweblaptop.service.PhieuNhapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,26 +37,26 @@ public class PhieuNhapController {
         return ResponseEntity.ok(response);
     }
 
-//    @GetMapping("/{nhap_id}")
-//    public ResponseEntity<ResponseDTO> findPN(@PathVariable("nhap_id") Long nhapId) throws ResourceNotFoundException {
-//        ResponseDTO responseDTO = new ResponseDTO();
-//        try {
-//            PhieuNhapResponseDTO nhapDTO = nhapService.getPhieuNhap(nhapId);
-//
-//            responseDTO.setData(nhapDTO);
-//            responseDTO.setSuccessCode(SuccessCode.FIND_PHIEU_NHAP_SUCCESS);
-//        } catch (Exception e){
-//            throw new ResourceNotFoundException(""+ErrorCode.FIND_PHIEU_NHAP_ERROR);
-//        }
-//        return ResponseEntity.ok(responseDTO);
-//    }
+    @GetMapping("/{nhap_id}")
+    public ResponseEntity<ResponseDTO> findPN(@PathVariable("nhap_id") Long nhapId) throws ResourceNotFoundException {
+        ResponseDTO responseDTO = new ResponseDTO();
+        try {
+            PhieuNhapResponseDTO nhapDTO = nhapService.getPhieuNhap(nhapId);
 
+            responseDTO.setData(nhapDTO);
+            responseDTO.setSuccessCode(SuccessCode.FIND_PHIEU_NHAP_SUCCESS);
+        } catch (Exception e){
+            throw new ResourceNotFoundException(""+ErrorCode.FIND_PHIEU_NHAP_ERROR);
+        }
+        return ResponseEntity.ok(responseDTO);
+    }
+    // tao phieu nhap
     @PostMapping("/add")
     public ResponseEntity<ResponseDTO> createPN(@Valid @RequestBody PhieuNhapDTO nhapDTO) throws AddDataFail {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
             nhapDTO.setStatus("Success");
-            PhieuNhapDTO dto = nhapService.savePN(nhapDTO);
+            PhieuNhapResponseDTO dto = nhapService.savePN(nhapDTO);
             responseDTO.setData(dto);
             responseDTO.setSuccessCode(SuccessCode.ADD_PHIEU_NHAP_SUCCESS);
         } catch (Exception e){
@@ -68,7 +65,21 @@ public class PhieuNhapController {
 
         return ResponseEntity.ok(responseDTO);
     }
-    //
+    // tao phieu xuat
+    @PostMapping("/addpx")
+    public ResponseEntity<ResponseDTO> createpx(@Valid @RequestBody PhieuNhapDTO nhapDTO) throws AddDataFail {
+        ResponseDTO responseDTO = new ResponseDTO();
+        try {
+            nhapDTO.setStatus("Success");
+            PhieuNhapResponseDTO dto = nhapService.savePX(nhapDTO);
+            responseDTO.setData(dto);
+            responseDTO.setSuccessCode(SuccessCode.ADD_PHIEU_NHAP_SUCCESS);
+        } catch (Exception e){
+            throw new AddDataFail(""+ErrorCode.ADD_PHIEU_NHAP_ERROR);
+        }
+
+        return ResponseEntity.ok(responseDTO);
+    }
 ////    //update
     @PutMapping("/phieu/{nhap_id}")
     public ResponseEntity<ResponseDTO> updatePD(@PathVariable(value = "nhap_id") Long nhapId, @RequestBody PhieuNhapDTO dto) throws UpdateDataFail {
@@ -86,6 +97,21 @@ public class PhieuNhapController {
         return ResponseEntity.ok(responseDTO);
     }
 
+    // cancel order
+    @PutMapping("/cancel/{nhap_id}")
+    public ResponseEntity<ResponseDTO> cancelPhieuNhap(@PathVariable(value = "nhap_id") Long nhapId) throws UpdateDataFail {
+        ResponseDTO responseDTO = new ResponseDTO();
+        try {
+            PhieuNhapDTO update = nhapService.cancelPN(nhapId);
+
+            responseDTO.setData(update);
+            responseDTO.setSuccessCode(SuccessCode.UPDATE_PHIEU_NHAP_SUCCESS);
+        } catch (Exception e){
+            throw new UpdateDataFail(""+ErrorCode.UPDATE_PHIEU_NHAP_ERROR);
+        }
+
+        return ResponseEntity.ok(responseDTO);
+    }
     ////    //delete
     @DeleteMapping("/phieu/{nhap_id}")
     public ResponseEntity<ResponseDTO> deletePD(@PathVariable(value = "nhap_id") Long nhapId) throws DeleteDataFail {

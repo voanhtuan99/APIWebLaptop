@@ -1,5 +1,6 @@
 package com.example.apiweblaptop.dto;
 
+import com.example.apiweblaptop.entity.Company;
 import com.example.apiweblaptop.entity.PhieuNhap;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -17,7 +19,8 @@ public class PhieuNhapResponseDTO {
     private LocalDate createDate;
     private String email;
     private String statusName;
-    private Long company_id;
+    private String company_name;
+    private String loaiPhieu;
     private List<CTPhieuNhapResponseDTO> ctpNhapResponseDTOS;
 
 
@@ -27,9 +30,9 @@ public class PhieuNhapResponseDTO {
         nhapDTO.setCreateDate(phieuNhap.getNgaylapphieu());
         nhapDTO.setEmail(phieuNhap.getUser().getEmail());
         //nhapDTO.setDatId(phieuNhap.getPhieuDat().getDatId());
-        nhapDTO.setStatusName(phieuNhap.getLoaiphieu());
-        nhapDTO.setCompany_id(phieuNhap.getCompany().getId());
-
+        nhapDTO.setStatusName(phieuNhap.getStatus());
+        nhapDTO.setCompany_name(phieuNhap.getCompany().getCompany_name());
+        nhapDTO.setLoaiPhieu(phieuNhap.getLoaiphieu());
         return nhapDTO;
     }
 
