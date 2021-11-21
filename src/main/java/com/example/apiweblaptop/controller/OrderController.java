@@ -88,6 +88,17 @@ public class OrderController {
 
         return ResponseEntity.ok(responseDTO);
     }
+    // Received Order
+    @PutMapping("/received/{order_id}")
+    public ResponseEntity<ResponseDTO> receiveOrderUser(@PathVariable("order_id") @NotBlank Long orderId) throws ResourceNotFoundException {
+        ResponseDTO responseDTO = new ResponseDTO();
+
+        OrderDTO dto = orderService.receiveOrder(orderId);
+        responseDTO.setData(dto);
+        responseDTO.setSuccessCode(SuccessCode.ADD_ORDER_SUCCESS);
+
+        return ResponseEntity.ok(responseDTO);
+    }
     @PostMapping("/add")
     public ResponseEntity<ResponseDTO> createOrder(@Valid @RequestBody OrderDTO orderDTO) throws AddDataFail {
         ResponseDTO responseDTO = new ResponseDTO();

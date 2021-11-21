@@ -80,7 +80,14 @@ public class OrderServiceImpl implements OrderService {
         orderr = orderRepository.save(orderExist);
         return new OrderDTO().entityToDTO(orderr);
     }
-
+    @Override
+    public OrderDTO receiveOrder(Long orderId) throws ResourceNotFoundException {
+        Order orderExist = orderRepository.findById(orderId).orElseThrow(() ->
+                new ResourceNotFoundException("order not found for this id: "+orderId));
+        System.out.println(orderExist.getId());
+        orderExist.setStatus("Đã nhận");
+        return new OrderDTO().entityToDTO(orderExist);
+    }
     @Override
     public List<OrderDTO> findOrderByUser(Long userId) throws ResourceNotFoundException {
         Optional<User> userExist = userRepository.findById(userId);

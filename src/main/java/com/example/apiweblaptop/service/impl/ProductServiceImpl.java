@@ -82,7 +82,59 @@ public class ProductServiceImpl implements ProductService {
         }
         return top4;
     }
+    @Override
+    public List<ProductDTO> retrieveProductBrand(Long brandId) {
+        List<ProductDTO> productList = new ProductDTO().entityToDTO(productRepository.findAll());
+        List<ProductDTO> newProducts = new ArrayList<>();
+        for(int i=0; i<productList.size(); i++) {
+            if(productList.get(i).getBrand_id().equals(brandId)) {
+                newProducts.add(productList.get(i));
+            }
+        }
+        List<ImageDTO> images = new ImageDTO().toListDto(imageProductRepository.findAll());
+        for(int i=0; i<newProducts.size(); i++) {
+            List<ImageDTO> imgs = new ArrayList<>();
+            for(int j=0; j<images.size(); j++) {
+                if(newProducts.get(i).getId() == images.get(j).getProduct_id()) {
+                    imgs.add(images.get(j));
+                }
+            }
+            if(imgs.size()!=0) {
+                newProducts.get(i).setImageDTOS(imgs);
+            }
+            else {
 
+            }
+        }
+        return newProducts;
+    }
+
+    @Override
+    public List<ProductDTO> retrieveProductCate(Long cateId) {
+        List<ProductDTO> productList = new ProductDTO().entityToDTO(productRepository.findAll());
+        List<ProductDTO> newProducts = new ArrayList<>();
+        for(int i=0; i<productList.size(); i++) {
+            if(productList.get(i).getCategory_id().equals(cateId)) {
+                newProducts.add(productList.get(i));
+            }
+        }
+        List<ImageDTO> images = new ImageDTO().toListDto(imageProductRepository.findAll());
+        for(int i=0; i<newProducts.size(); i++) {
+            List<ImageDTO> imgs = new ArrayList<>();
+            for(int j=0; j<images.size(); j++) {
+                if(newProducts.get(i).getId() == images.get(j).getProduct_id()) {
+                    imgs.add(images.get(j));
+                }
+            }
+            if(imgs.size()!=0) {
+                newProducts.get(i).setImageDTOS(imgs);
+            }
+            else {
+
+            }
+        }
+        return newProducts;
+    }
     @Override
     public List<ProductDTO> get4ProductNew() {
 //        List<ProductDTO> productDTOS = new ProductDTO().entityToDTO(productRepository.findAll());

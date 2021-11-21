@@ -24,4 +24,6 @@ public interface OrderService {
     public OrderDTO cancelOrder(Long orderId) throws ResourceNotFoundException;
 
     public OrderDTO acceptOrder(Long orderId) throws ResourceNotFoundException;
+
+    public OrderDTO receiveOrder(Long orderId) throws ResourceNotFoundException;
 }

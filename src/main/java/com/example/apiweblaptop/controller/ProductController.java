@@ -80,7 +80,34 @@ public class ProductController {
         }
         return ResponseEntity.ok(responseDTO);
     }
+    // get by brand id
+    @GetMapping("/brand/{brand_id}")
+    public ResponseEntity<ResponseDTO> getByBrand(@PathVariable("brand_id") Long id) throws ResourceNotFoundException {
+        ResponseDTO responseDTO = new ResponseDTO();
+        try {
+            List<ProductDTO> productDTO = productService.retrieveProductBrand(id);
 
+            responseDTO.setData(productDTO);
+            responseDTO.setSuccessCode(SuccessCode.FIND_PRODUCT_SUCCESS);
+        } catch (Exception e){
+            throw new ResourceNotFoundException(""+ErrorCode.FIND_PRODUCT_ERROR);
+        }
+        return ResponseEntity.ok(responseDTO);
+    }
+    // get by brand id
+    @GetMapping("/cate/{cate_id}")
+    public ResponseEntity<ResponseDTO> getByCate(@PathVariable("cate_id") Long id) throws ResourceNotFoundException {
+        ResponseDTO responseDTO = new ResponseDTO();
+        try {
+            List<ProductDTO> productDTO = productService.retrieveProductCate(id);
+
+            responseDTO.setData(productDTO);
+            responseDTO.setSuccessCode(SuccessCode.FIND_PRODUCT_SUCCESS);
+        } catch (Exception e){
+            throw new ResourceNotFoundException(""+ErrorCode.FIND_PRODUCT_ERROR);
+        }
+        return ResponseEntity.ok(responseDTO);
+    }
     // insert
     @PostMapping("/add")
     public ResponseEntity<ResponseDTO> createProduct(@RequestBody ProductDTO dto) throws AddDataFail {

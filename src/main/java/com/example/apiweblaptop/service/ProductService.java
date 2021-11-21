@@ -2,6 +2,7 @@ package com.example.apiweblaptop.service;
 
 import com.example.apiweblaptop.dto.ProductDTO;
 import com.example.apiweblaptop.dto.ProductResponseDTO;
+import com.example.apiweblaptop.entity.Product;
 import com.example.apiweblaptop.exception.BadRequestException;
 import com.example.apiweblaptop.exception.ResourceNotFoundException;
 
@@ -21,4 +22,8 @@ public interface ProductService {
     public Boolean deleteProduct(Long productId) throws ResourceNotFoundException;
 
     public ProductDTO getProduct(Long productId) throws ResourceNotFoundException;
+
+    public List<ProductDTO> retrieveProductBrand(Long brandId);
+
+    public List<ProductDTO> retrieveProductCate(Long cateId);
 }
