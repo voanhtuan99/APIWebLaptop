@@ -1,5 +1,6 @@
 package com.example.apiweblaptop.service;
 
+import com.example.apiweblaptop.dto.InputSearch;
 import com.example.apiweblaptop.dto.ProductDTO;
 import com.example.apiweblaptop.dto.ProductResponseDTO;
 import com.example.apiweblaptop.entity.Product;
@@ -26,4 +27,6 @@ public interface ProductService {
     public List<ProductDTO> retrieveProductBrand(Long brandId);
 
     public List<ProductDTO> retrieveProductCate(Long cateId);
+
+    public List<ProductDTO> searchProduct(InputSearch inputText);
 }

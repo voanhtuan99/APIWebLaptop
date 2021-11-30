@@ -1,10 +1,7 @@
 package com.example.apiweblaptop.service.impl;
 
 
-import com.example.apiweblaptop.dto.ErrorCode;
-import com.example.apiweblaptop.dto.ImageDTO;
-import com.example.apiweblaptop.dto.ProductDTO;
-import com.example.apiweblaptop.dto.ProductResponseDTO;
+import com.example.apiweblaptop.dto.*;
 import com.example.apiweblaptop.entity.Brand;
 import com.example.apiweblaptop.entity.Category;
 import com.example.apiweblaptop.entity.Product;
@@ -163,6 +160,32 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         return top4;
+    }
+    @Override
+    public List<ProductDTO> searchProduct(InputSearch inputText) {
+        List<ProductDTO> productList = new ProductDTO().entityToDTO(productRepository.findAll());
+        List<ProductDTO> newProducts = new ArrayList<>();
+        for(int i=0; i<productList.size(); i++) {
+            if(productList.get(i).getProduct_name().toLowerCase().contains(inputText.getSearchText().toLowerCase())) {
+                newProducts.add(productList.get(i));
+            }
+        }
+        List<ImageDTO> images = new ImageDTO().toListDto(imageProductRepository.findAll());
+        for(int i=0; i<newProducts.size(); i++) {
+            List<ImageDTO> imgs = new ArrayList<>();
+            for(int j=0; j<images.size(); j++) {
+                if(newProducts.get(i).getId() == images.get(j).getProduct_id()) {
+                    imgs.add(images.get(j));
+                }
+            }
+            if(imgs.size()!=0) {
+                newProducts.get(i).setImageDTOS(imgs);
+            }
+            else {
+
+            }
+        }
+        return newProducts;
     }
     @Override
     public ProductDTO getProduct(Long productId) throws ResourceNotFoundException {
