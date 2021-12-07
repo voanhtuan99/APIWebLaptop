@@ -250,6 +250,7 @@ public class ProductServiceImpl implements ProductService {
         proExist.setDescription(productDTO.getProduct_description());
         proExist.setBrand(branch);
         proExist.setCategory(category);
+        proExist.setQty(productDTO.getProduct_qty());
 //        proExist.setCreateAt(proExist.getCreateAt());
         Product product = new Product();
         product = productRepository.save(proExist);

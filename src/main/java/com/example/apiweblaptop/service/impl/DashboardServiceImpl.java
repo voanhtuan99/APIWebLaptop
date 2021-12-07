@@ -41,11 +41,11 @@ public class DashboardServiceImpl implements DashboardService {
             if(e.getNgaylapphieu().isBefore(end) && e.getNgaylapphieu().isAfter(begin)) {
                 ctPhieuNhaps.forEach(e1 -> {
                     if(e.getId() == e1.getIdimport()) {
-                        if(e.getLoaiphieu().equals("Phiếu nhập")) {
+                        if(e.getLoaiphieu().equals("Phiếu nhập") && e.getStatus().equals("Success")) {
                             tke.setSoLuongNhap(e1.getQuantity()+tke.getSoLuongNhap());
                             tke.setTienNhap(e1.getPrice()+tke.getTienNhap());
                         }
-                        else if(e.getLoaiphieu().equals("Phiếu xuất")) {
+                        else if(e.getLoaiphieu().equals("Phiếu xuất") && e.getStatus().equals("Success")) {
                             tke.setSoLuongXuat(e1.getQuantity()+tke.getSoLuongXuat());
                             tke.setTienXuat(e1.getPrice()+tke.getTienXuat());
                         }
@@ -67,7 +67,7 @@ public class DashboardServiceImpl implements DashboardService {
         LocalDate end = LocalDate.parse(dateDashboardDTO.getDateEnd());
         List<ProductSoldMaxDTO> productSold = new ArrayList<>();
         phieuNhaps.forEach(e -> {
-            if (e.getNgaylapphieu().isBefore(end) && e.getNgaylapphieu().isAfter(begin) && e.getLoaiphieu().equals("Phiếu nhập")) {
+            if (e.getNgaylapphieu().isBefore(end) && e.getNgaylapphieu().isAfter(begin) && e.getLoaiphieu().equals("Phiếu xuất") ) {
                 ctPhieuNhaps.forEach(e1 -> {
                     if (e.getId() == e1.getIdimport()) {
                         ctPhieuNhaps1.add(e1);
@@ -110,7 +110,7 @@ public class DashboardServiceImpl implements DashboardService {
         LocalDate end = LocalDate.parse(dateDashboardDTO.getDateEnd());
         List<ProductSoldPriceDTO> productSold = new ArrayList<>();
         phieuNhaps.forEach(e -> {
-            if (e.getNgaylapphieu().isBefore(end) && e.getNgaylapphieu().isAfter(begin) && e.getLoaiphieu().equals("Phiếu nhập")) {
+            if (e.getNgaylapphieu().isBefore(end) && e.getNgaylapphieu().isAfter(begin) && e.getLoaiphieu().equals("Phiếu xuất") ) {
                 ctPhieuNhaps.forEach(e1 -> {
                     if (e.getId() == e1.getIdimport()) {
                         ctPhieuNhaps1.add(e1);
@@ -153,7 +153,7 @@ public class DashboardServiceImpl implements DashboardService {
         LocalDate end = LocalDate.parse(dateDashboardDTO.getDateEnd());
         List<ProductSoldPriceDTO> productSold = new ArrayList<>();
         phieuNhaps.forEach(e -> {
-            if (e.getNgaylapphieu().isBefore(end) && e.getNgaylapphieu().isAfter(begin) && e.getLoaiphieu().equals("Phiếu nhập")) {
+            if (e.getNgaylapphieu().isBefore(end) && e.getNgaylapphieu().isAfter(begin) && e.getLoaiphieu().equals("Phiếu xuất")) {
                 ctPhieuNhaps.forEach(e1 -> {
                     if (e.getId() == e1.getIdimport()) {
                         ctPhieuNhaps1.add(e1);
@@ -188,7 +188,7 @@ public class DashboardServiceImpl implements DashboardService {
         LocalDate end = LocalDate.parse(dateDashboardDTO.getDateEnd());
         List<ProductSoldMaxDTO> productSold = new ArrayList<>();
         phieuNhaps.forEach(e -> {
-            if (e.getNgaylapphieu().isBefore(end) && e.getNgaylapphieu().isAfter(begin) && e.getLoaiphieu().equals("Phiếu nhập")) {
+            if (e.getNgaylapphieu().isBefore(end) && e.getNgaylapphieu().isAfter(begin) && e.getLoaiphieu().equals("Phiếu xuất")) {
                 ctPhieuNhaps.forEach(e1 -> {
                     if (e.getId() == e1.getIdimport()) {
                         ctPhieuNhaps1.add(e1);

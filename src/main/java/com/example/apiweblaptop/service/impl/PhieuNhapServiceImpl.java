@@ -127,13 +127,17 @@ public class PhieuNhapServiceImpl implements PhieuNhapService {
                 ctpns.add(new CTPhieuNhapDTO().entityToDTO(e));
             }
         });
-        phieuNhap.setStatus("Cancel");
+
         List<Product> products = productrepository.findAll();
         for(int i=0; i < ctpns.size(); i++) {
             for(int j=0; j<products.size(); j++) {
                 if(ctpns.get(i).getIdproduct() == products.get(j).getId()) {
+
                     if(phieuNhap.getLoaiphieu().equals("Phiếu nhập")) {
-                        products.get(j).setQty(products.get(j).getQty()-ctpns.get(i).getQuantity());
+                        if(products.get(j).getQty() < ctpns.get(i).getQuantity()){
+                            return null;
+                        }
+                        else products.get(j).setQty(products.get(j).getQty()-ctpns.get(i).getQuantity());
                     }
                     else if(phieuNhap.getLoaiphieu().equals("Phiếu xuất")) {
                         products.get(j).setQty(products.get(j).getQty()+ctpns.get(i).getQuantity());
@@ -143,6 +147,7 @@ public class PhieuNhapServiceImpl implements PhieuNhapService {
                 productrepository.save(products.get(j));
             }
         }
+        phieuNhap.setStatus("Cancel");
         return new PhieuNhapDTO().entityToDTO(phieuNhap);
     }
 
