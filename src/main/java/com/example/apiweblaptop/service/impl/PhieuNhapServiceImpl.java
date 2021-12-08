@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -38,7 +39,12 @@ public class PhieuNhapServiceImpl implements PhieuNhapService {
     @Override
     public List<PhieuNhapResponseDTO> retrievePhieuNhaps() {
         List<PhieuNhap> nhaps = nhapRepository.findAll();
-        return new PhieuNhapResponseDTO().toListDto(nhaps);
+        List<PhieuNhap> nhapsNew = nhaps.stream().sorted((o1, o2) -> {
+            if(Integer.parseInt(String.valueOf(o1.getId())) < Integer.parseInt(String.valueOf(o2.getId())))
+                return 1;
+            else return -1;
+        }).collect(Collectors.toList());
+        return new PhieuNhapResponseDTO().toListDto(nhapsNew);
     }
 
     @Override

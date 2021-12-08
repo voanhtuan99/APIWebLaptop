@@ -1,9 +1,6 @@
 package com.example.apiweblaptop.service.impl;
 
-import com.example.apiweblaptop.dto.DetailOrderDTO;
-import com.example.apiweblaptop.dto.ErrorCode;
-import com.example.apiweblaptop.dto.OrderDTO;
-import com.example.apiweblaptop.dto.ProductDTO;
+import com.example.apiweblaptop.dto.*;
 import com.example.apiweblaptop.entity.Order;
 import com.example.apiweblaptop.entity.Product;
 import com.example.apiweblaptop.entity.User;
@@ -20,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
@@ -38,8 +37,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDTO> retrieveOrders() {
         List<Order> orders = orderRepository.findAll();
-
-        return new OrderDTO().entityToDTO(orders);
+        List<Order> ordersNew = orders.stream().sorted((o1, o2) -> {
+            if(Integer.parseInt(String.valueOf(o1.getId())) < Integer.parseInt(String.valueOf(o2.getId())))
+                return 1;
+            else return -1;
+        }).collect(Collectors.toList());
+        return new OrderDTO().entityToDTO(ordersNew);
     }
 
     @Override
