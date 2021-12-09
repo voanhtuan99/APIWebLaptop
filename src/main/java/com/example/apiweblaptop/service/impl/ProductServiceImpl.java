@@ -2,10 +2,7 @@ package com.example.apiweblaptop.service.impl;
 
 
 import com.example.apiweblaptop.dto.*;
-import com.example.apiweblaptop.entity.Brand;
-import com.example.apiweblaptop.entity.Category;
-import com.example.apiweblaptop.entity.Product;
-import com.example.apiweblaptop.entity.ProductImage;
+import com.example.apiweblaptop.entity.*;
 import com.example.apiweblaptop.exception.BadRequestException;
 import com.example.apiweblaptop.exception.ResourceNotFoundException;
 import com.example.apiweblaptop.repo.BrandRepository;
@@ -51,7 +48,12 @@ public class ProductServiceImpl implements ProductService {
 
             }
         }
-        return products;
+        List<ProductDTO> productsNew = products.stream().sorted((o1, o2) -> {
+            if(Integer.parseInt(String.valueOf(o1.getId())) < Integer.parseInt(String.valueOf(o2.getId())))
+                return 1;
+            else return -1;
+        }).collect(Collectors.toList());
+        return productsNew;
     }
     @Override
     public List<ProductDTO> top4ProductHot() throws ResourceNotFoundException {
